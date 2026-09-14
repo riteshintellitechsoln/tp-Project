@@ -76,16 +76,13 @@
 // }
 
 
-
-
-import type { Prisma } from "@prisma/client";
+ import type { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { db } from "@/lib/db";
 import { getDateRange } from "@/lib/admin-filters";
 import { AdminSearchBox } from "@/components/admin/admin-search-box";
 import { AdminFilterBar, AdminFilterField } from "@/components/admin/admin-filter-bar";
 import { AdminDateRangeFilter } from "@/components/admin/admin-date-range-filter";
-
 import { AdminTable } from "@/components/admin/admin-table";
 import { ExportExcelButton } from "@/components/admin/export-excel-button";
 import { Pagination } from "@/components/shared/pagination";
@@ -136,12 +133,11 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
     return `/admin/leads${qs ? `?${qs}` : ""}`;
   }
 
- 
-
-       const exportData = leads.map((l) => ({
+  const exportData = leads.map((l) => ({
     Name: l.fullName,
     Email: l.email,
     Company: l.companyName,
+    Website: l.companyWebsite ?? "",
     "Job Title": l.jobTitle,
     Industry: l.industry,
     Country: l.country,
@@ -154,8 +150,8 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
         <h1 className="font-display text-2xl font-bold">Leads ({totalCount})</h1>
         <ExportExcelButton data={exportData} filename="leads-export" sheetName="Leads" />
       </div>
+
       <AdminFilterBar>
-        
         <AdminFilterField label="Search">
           <AdminSearchBox placeholder="Search by name, email, or company..." />
         </AdminFilterField>
@@ -172,6 +168,22 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
           { header: "Name", cell: (l) => l.fullName },
           { header: "Email", cell: (l) => l.email },
           { header: "Company", cell: (l) => l.companyName },
+          {
+            header: "Website",
+            cell: (l) =>
+              l.companyWebsite ? (
+                <a
+                  href={l.companyWebsite}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  {l.companyWebsite.replace(/^https?:\/\//, "")}
+                </a>
+              ) : (
+                "—"
+              ),
+          },
           { header: "Job Title", cell: (l) => l.jobTitle },
           { header: "Industry", cell: (l) => l.industry },
           { header: "Country", cell: (l) => l.country },

@@ -1,9 +1,11 @@
 "use server";
 
-import { db } from "@/lib/db";
+ import { db } from "@/lib/db";
 import { signupSchema, type SignupInput } from "@/lib/validations/signup";
 import { generatePasswordSetToken } from "@/lib/password-reset-token";
 import { sendSetPasswordEmail } from "@/lib/email/set-password";
+import { deriveCompanyWebsiteFromEmail } from "@/lib/company-website";
+
 
 type SignupResult = { success: true } | { success: false; error: string };
 
@@ -26,7 +28,7 @@ export async function signUpUser(input: SignupInput): Promise<SignupResult> {
 
   const { token, tokenHash, expiresAt } = generatePasswordSetToken();
 
-  await db.user.create({
+   await db.user.create({
     data: {
       name: `${parsed.data.firstName} ${parsed.data.lastName}`,
       firstName: parsed.data.firstName,
@@ -34,12 +36,14 @@ export async function signUpUser(input: SignupInput): Promise<SignupResult> {
       email,
       phone: parsed.data.phone,
       companyName: parsed.data.companyName,
+      companyWebsite: deriveCompanyWebsiteFromEmail(email),
       jobTitle: parsed.data.jobTitle,
       passwordResetTokenHash: tokenHash,
       passwordResetTokenExpiresAt: expiresAt,
     },
   });
 
+  
   const setPasswordUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/set-password?token=${token}`;
 
   const emailResult = await sendSetPasswordEmail({
