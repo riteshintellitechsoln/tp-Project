@@ -44,6 +44,7 @@ firstName                   String?
   passwordResetTokenHash      String?
   passwordResetTokenExpiresAt DateTime?
 
+  companyWebsite               String?
 
   @@map("users")
 }
@@ -179,6 +180,8 @@ model Lead {
   downloads     Download[]
   user          User?       @relation(fields: [userId], references: [id])
 
+  companyWebsite String?
+  
   @@index([companyDomain])
   @@index([industry])
   @@index([createdAt])

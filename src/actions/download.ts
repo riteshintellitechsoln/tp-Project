@@ -1385,6 +1385,8 @@ import { leadSchema, type LeadInput } from "@/lib/validations/lead";
 import { createDownloadToken } from "@/lib/tokens";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { sendDownloadEmail } from "@/lib/email/resend";
+import { deriveCompanyWebsiteFromEmail } from "@/lib/company-website";
+
 
 interface InitiateDownloadInput extends LeadInput {
   bookSlug: string;
@@ -1669,6 +1671,7 @@ export async function initiateDownload(
       fullName,
       phone,
       companyName,
+      companyWebsite: deriveCompanyWebsiteFromEmail(email),
       jobTitle,
       country,
       state: state || null,
@@ -1685,6 +1688,7 @@ export async function initiateDownload(
       fullName,
       email,
       companyDomain: domain,
+      companyWebsite: deriveCompanyWebsiteFromEmail(email),
       phone,
       companyName,
       jobTitle,
