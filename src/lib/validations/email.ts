@@ -8,7 +8,7 @@ import { z } from "zod";
 // screen is where an Admin could extend this without a code deploy, if
 // that becomes necessary.
 const FREE_EMAIL_DOMAINS = new Set([
-  // "gmail.com",
+  "gmail.com",
   "googlemail.com",
   "yahoo.com",
   "yahoo.co.uk",
