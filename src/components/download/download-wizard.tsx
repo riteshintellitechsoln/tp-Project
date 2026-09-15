@@ -196,7 +196,8 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
         setQuickError(result.error);
         return;
       }
-      router.push(`/thank-you?book=${book.slug}`);
+      // router.push(`/thank-you?book=${book.slug}`);
+            router.push(`/thank-you?book=${book.slug}&email=${encodeURIComponent(email)}`);
     });
   }
 
@@ -312,7 +313,8 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
             <LeadForm
               email={email}
               bookSlug={book.slug}
-              onSuccess={() => router.push(`/thank-you?book=${book.slug}`)}
+              // onSuccess={() => router.push(`/thank-you?book=${book.slug}`)}
+                            onSuccess={() => router.push(`/thank-you?book=${book.slug}&email=${encodeURIComponent(email)}`)}
             />
           </div>
         )}
