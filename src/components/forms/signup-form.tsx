@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, MailCheck } from "lucide-react";
+import { Link, Loader2, MailCheck } from "lucide-react";
 
 import { signupSchema, type SignupInput } from "@/lib/validations/signup";
 import { signUpUser } from "@/actions/signup";
@@ -21,7 +21,9 @@ import {
 export function SignupForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  // const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+    const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  const [accountAlreadyExists, setAccountAlreadyExists] = useState(false);
 
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
@@ -42,10 +44,17 @@ export function SignupForm() {
     const result = await signUpUser(values);
     setIsSubmitting(false);
 
-    if (!result.success) {
+    // if (!result.success) {
+    //   setServerError(result.error);
+    //   return;
+    // }
+
+        if (!result.success) {
       setServerError(result.error);
+      setAccountAlreadyExists(result.error.includes("already exists"));
       return;
     }
+
 
     setSubmittedEmail(values.email);
   }
@@ -154,10 +163,26 @@ export function SignupForm() {
           />
         </div>
 
-        {serverError && (
+        {/* {serverError && (
           <p role="alert" className="text-sm font-medium text-destructive">
             {serverError}
           </p>
+        )} */}
+
+                {serverError && (
+          <div>
+            <p role="alert" className="text-sm font-medium text-destructive">
+              {serverError}
+            </p>
+            {accountAlreadyExists && (
+              <Link
+                href="/forgot-password"
+                className="mt-1.5 inline-block text-sm font-medium text-primary hover:underline"
+              >
+                Forgot your password? Reset it →
+              </Link>
+            )}
+          </div>
         )}
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>

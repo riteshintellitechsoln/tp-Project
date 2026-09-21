@@ -33,10 +33,29 @@ const FREE_EMAIL_DOMAINS = new Set([
   "163.com",
 ]);
 
+// Brand names of the big free providers. A domain whose name merely
+// *contains* one (dsfggmail.com, mygmail.com, gamail.com) is a typo or
+// lookalike of a free provider, not a real company domain.
+const FREE_PROVIDER_LOOKALIKES = [
+  "gmail",
+  "gamil",
+  "gamail",
+  "gmial",
+  "gnail",
+  "googlemail",
+  "yahoo",
+  "hotmail",
+  "outlook",
+  "icloud",
+  "protonmail",
+];
+
 export function isCompanyEmailDomain(email: string): boolean {
   const domain = email.split("@")[1]?.toLowerCase().trim();
   if (!domain) return false;
-  return !FREE_EMAIL_DOMAINS.has(domain);
+  if (FREE_EMAIL_DOMAINS.has(domain)) return false;
+  const name = domain.split(".")[0] ?? "";
+  return !FREE_PROVIDER_LOOKALIKES.some((brand) => name.includes(brand));
 }
 
 export const companyEmailSchema = z

@@ -203,12 +203,30 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </Link>
           </Button>
 
-                    <p className="mt-4 text-center text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-medium text-primary hover:underline">
+
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Don&apos;t have an account?
+          </p>
+
+          <div className="mt-4 flex items-center justify-center gap-3 text-sm">
+            <Link
+              href="/signup"
+              className="group inline-flex items-center rounded-xl border border-primary/20 bg-primary/5 px-4 py-2 font-semibold text-primary shadow-[0_4px_0_rgba(0,0,0,0.08),0_8px_18px_rgba(0,0,0,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-[0_6px_0_rgba(0,0,0,0.12),0_12px_24px_rgba(0,0,0,0.12)] active:translate-y-0 active:shadow-[0_2px_0_rgba(0,0,0,0.08),0_4px_10px_rgba(0,0,0,0.08)]"
+            >
               Create one
             </Link>
-          </p>
+
+            <span className="text-muted-foreground/60">•</span>
+
+            <Link
+              href="/forgot-password"
+              className="group inline-flex items-center rounded-xl border border-border bg-background px-4 py-2 font-semibold text-muted-foreground shadow-[0_4px_0_rgba(0,0,0,0.06),0_8px_18px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary/5 hover:text-primary hover:shadow-[0_6px_0_rgba(0,0,0,0.1),0_12px_24px_rgba(0,0,0,0.1)] active:translate-y-0 active:shadow-[0_2px_0_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.06)]"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          
           
         </CardContent>
       </Card>
