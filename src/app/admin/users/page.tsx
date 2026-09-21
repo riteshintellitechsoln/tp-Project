@@ -52,7 +52,7 @@ export default async function AdminUsersPage() {
 
   const exportData = users.map((u) => ({
     Name: u.name ?? "",
-    Email: u.email,
+    Email: u.email, 
     Phone: u.phone ?? "",
     Company: u.companyName ?? "",
     Designation: u.jobTitle ?? "",
@@ -82,6 +82,7 @@ export default async function AdminUsersPage() {
         columns={[
           { header: "Name", cell: (u) => u.name ?? "—" },
           { header: "Email", cell: (u) => u.email },
+                 { header: "Phone", cell: (u) => u.phone ?? "—" },
           { header: "Company", cell: (u) => u.companyName ?? "—" },
           { header: "Designation", cell: (u) => u.jobTitle ?? "—" },
           {

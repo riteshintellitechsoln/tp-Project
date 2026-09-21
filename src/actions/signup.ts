@@ -6,6 +6,7 @@ import { generatePasswordSetToken } from "@/lib/password-reset-token";
 import { sendSetPasswordEmail } from "@/lib/email/set-password";
 import { deriveCompanyWebsiteFromEmail } from "@/lib/company-website";
 
+import { domainCanReceiveEmail } from "@/lib/mx-check";
 
 type SignupResult = { success: true } | { success: false; error: string };
 
@@ -15,7 +16,18 @@ export async function signUpUser(input: SignupInput): Promise<SignupResult> {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
-  const email = parsed.data.email.toLowerCase().trim();
+  // const email = parsed.data.email.toLowerCase().trim();
+
+    const email = parsed.data.email.toLowerCase().trim();
+
+  const canReceiveEmail = await domainCanReceiveEmail(email);
+  if (!canReceiveEmail) {
+    return {
+      success: false,
+      error: "This email domain doesn't seem to be valid. Please double-check for typos.",
+    };
+  }
+
 
   const [existingAdmin, existingUser] = await Promise.all([
     db.admin.findUnique({ where: { email } }),

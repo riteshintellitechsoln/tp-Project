@@ -136,6 +136,7 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
   const exportData = leads.map((l) => ({
     Name: l.fullName,
     Email: l.email,
+     Phone: l.phone,
     Company: l.companyName,
     Website: l.companyWebsite ?? "",
     "Job Title": l.jobTitle,
@@ -167,7 +168,9 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
         columns={[
           { header: "Name", cell: (l) => l.fullName },
           { header: "Email", cell: (l) => l.email },
+                    { header: "Phone", cell: (l) => l.phone },
           { header: "Company", cell: (l) => l.companyName },
+             
           {
             header: "Website",
             cell: (l) =>
