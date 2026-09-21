@@ -180,6 +180,11 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
     const result = await checkExistingLead(values.email);
     setIsCheckingEmail(false);
 
+    if (result.error) {
+      emailForm.setError("email", { message: result.error });
+      return;
+    }
+
     if (result.exists) {
       setExistingName(result.fullName ?? null);
       setStep("quick");
