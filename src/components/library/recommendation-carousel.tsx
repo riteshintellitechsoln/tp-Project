@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import type { BookCardData } from "@/types";
 import {
   ChevronLeft,
   ChevronRight,
@@ -9,18 +10,9 @@ import {
 import { BookCard } from "@/components/books/book-card";
 import { SectionHeader } from "@/components/home/section-header";
 
-type RecommendationBook = {
-  id: string;
-  title: string;
-  slug: string;
-  coverImageUrl: string;
-  company: {
-    name: string;
-  };
-};
 
 interface RecommendationCarouselProps {
-  recommendations: RecommendationBook[];
+  recommendations: BookCardData[];
 }
 
 export function RecommendationCarousel({

@@ -32,6 +32,7 @@ import { initiateDownload } from "@/actions/download";
 
 function baseInput() {
   return {
+    salutation: "Ms" as const,
     fullName: "Jane Smith",
     email: "jane@acme.com",
     phone: "+1 555 123 4567",

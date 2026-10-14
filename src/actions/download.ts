@@ -292,6 +292,7 @@ export async function initiateDownload(
   }
 
   const {
+    salutation,
     fullName,
     phone,
     companyName,
@@ -323,6 +324,7 @@ export async function initiateDownload(
   const lead = await db.lead.upsert({
     where: { email },
     update: {
+      salutation,
       fullName,
       phone,
       companyName,
@@ -340,6 +342,7 @@ export async function initiateDownload(
       userAgent,
     },
     create: {
+      salutation,
       fullName,
       email,
       companyDomain: domain,

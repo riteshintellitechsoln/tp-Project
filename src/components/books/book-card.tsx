@@ -88,13 +88,13 @@ export function BookCard({
         )}
         <Link
           href={`/book/${book.slug}`}
-          className="line-clamp-2 font-display text-sm font-semibold leading-snug hover:underline"
+          className="block break-words font-display text-sm font-semibold leading-snug hover:underline"
         >
           {book.title}
         </Link>
         <p className="text-xs text-muted-foreground">{book.company.name}</p>
         {book.shortDescription && (
-          <p className="line-clamp-2 text-xs text-muted-foreground">
+          <p className="break-words text-xs text-muted-foreground">
             {book.shortDescription}
           </p>
         )}

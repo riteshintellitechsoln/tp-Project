@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Bookmark, BookOpen, Compass, Library, Sparkles } from "lucide-react";
+import { Bookmark, Compass, Library, Sparkles } from "lucide-react";
 import { SearchBar } from "@/components/layout/search-bar";
 import { UserNav } from "@/components/layout/user-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -42,22 +43,29 @@ export function Navbar({ categories }: { categories: NavCategory[] }) {
         scrolled ? "border-slate-200 shadow-md" : "border-slate-200/80 shadow-none"
       }`}
     >
-      <div className=" flex h-16 items-center gap-13 px- sm:h-[72px] sm:px-6">
+      <div className="flex h-16 items-center gap-2 px-4 sm:h-[72px] sm:gap-3 sm:px-6">
         <MobileNav categories={categories} />
 
-        <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="TradeHub home">
+        <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="itbusinessbook home">
           <motion.span
-            whileHover={{ scale: 1.08, rotate: -6 }}
+            whileHover={{ scale: 1.06 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#123b6d] to-[#1d4f91] text-white shadow-md shadow-blue-900/20"
+            className="block h-10 w-10 overflow-hidden rounded-md shadow-md shadow-blue-900/20 sm:h-11 sm:w-11"
           >
-            <BookOpen className="h-5 w-5" />
+            <Image
+              src="/itbusinessbook-logo.png"
+              alt="IT BusinessBook logo"
+              width={331}
+              height={331}
+              priority
+              className="h-full w-full object-contain"
+            />
           </motion.span>
-          <span className="hidden leading-none sm:block">
-            <span className="block text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">
+          <span className="leading-none">
+            <span className="hidden text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500 sm:block">
               Research library
             </span>
-            <span className="font-display text-xl font-bold tracking-tight">Travelocare</span>
+            <span className="font-display text-lg font-bold tracking-tight sm:text-xl">itbusinessbook</span>
           </span>
         </Link>
 

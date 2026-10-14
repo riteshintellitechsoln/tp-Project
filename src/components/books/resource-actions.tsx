@@ -178,6 +178,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Bookmark, Check, Ellipsis, EyeOff, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -188,13 +189,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { isBookSaved, toggleSavedBook } from "@/lib/saved-books";
+import { isBookSaved, SAVED_BOOKS_EVENT, toggleSavedBook } from "@/lib/saved-books";
 
 export function ResourceActions({ title, url }: { title: string; url: string }) {
   const [saved, setSaved] = useState(false);
+  const { data: session } = useSession();
+  const isSignedInUser = !!session?.user;
 
   useEffect(() => {
-    setSaved(isBookSaved(url));
+    const sync = () => setSaved(isBookSaved(url));
+    sync();
+    window.addEventListener(SAVED_BOOKS_EVENT, sync);
+    return () => window.removeEventListener(SAVED_BOOKS_EVENT, sync);
   }, [url]);
 
   function handleToggleSaved() {
@@ -203,7 +209,11 @@ export function ResourceActions({ title, url }: { title: string; url: string }) 
     toast.success(
       nowSaved ? "Saved for later" : "Removed from your saved list",
       nowSaved
-        ? { description: "View everything you've saved on the Saved page." }
+        ? {
+            description: isSignedInUser
+              ? "View everything you've saved on the Saved page."
+              : "Sign in to keep it — guest saves are cleared when you refresh.",
+          }
         : undefined,
     );
   }

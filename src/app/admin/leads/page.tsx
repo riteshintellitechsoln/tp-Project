@@ -134,6 +134,7 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
   }
 
   const exportData = leads.map((l) => ({
+    Salutation: l.salutation ?? "",
     Name: l.fullName,
     Email: l.email,
      Phone: l.phone,
@@ -166,7 +167,10 @@ export default async function AdminLeadsPage({ searchParams }: AdminLeadsPagePro
         rowKey={(lead) => lead.id}
         emptyMessage="No leads match your filters."
         columns={[
-          { header: "Name", cell: (l) => l.fullName },
+          {
+            header: "Name",
+            cell: (l) => (l.salutation ? `${l.salutation} ${l.fullName}` : l.fullName),
+          },
           { header: "Email", cell: (l) => l.email },
                     { header: "Phone", cell: (l) => l.phone },
           { header: "Company", cell: (l) => l.companyName },

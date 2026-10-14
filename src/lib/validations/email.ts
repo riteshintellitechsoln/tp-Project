@@ -37,7 +37,7 @@ const FREE_EMAIL_DOMAINS = new Set([
 // *contains* one (dsfggmail.com, mygmail.com, gamail.com) is a typo or
 // lookalike of a free provider, not a real company domain.
 const FREE_PROVIDER_LOOKALIKES = [
-  "gmail",
+  // "gmail",
   "gamil",
   "gamail",
   "gmial",

@@ -347,6 +347,7 @@ import {
   INDUSTRIES,
   COMPANY_SIZE_OPTIONS,
   COUNTRIES,
+  SALUTATIONS,
 } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -372,6 +373,7 @@ import {
 // the form instead" on the Quick Download screen, so it opens with their
 // existing details rather than blank.
 interface ExistingLeadDefaults {
+  salutation?: string | null;
   fullName: string;
   phone: string;
   companyName: string;
@@ -417,6 +419,7 @@ export function LeadForm({
   const form = useForm<LeadFormInput>({
     resolver: zodResolver(leadFormSchema),
     defaultValues: {
+      salutation: (defaultValues?.salutation ?? undefined) as LeadFormInput["salutation"],
       fullName: defaultValues?.fullName ?? "",
       phone: defaultValues?.phone ?? "",
       companyName: defaultValues?.companyName ?? "",
@@ -464,7 +467,31 @@ export function LeadForm({
           <Input value={email} disabled />
         </FormItem>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-[110px_1fr_1fr]">
+          <FormField
+          control={form.control}
+          name="salutation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Salutation</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {SALUTATIONS.map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
           <FormItem>
             <FormLabel>First name</FormLabel>
             <FormControl>
@@ -689,9 +716,13 @@ export function LeadForm({
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="font-normal">
-                  I agree to share my details with the publisher and TradeHub&apos;s{" "}
+                  I agree to share my details with the publisher and accept TradeHub&apos;s{" "}
                   <a href="/privacy" target="_blank" rel="noreferrer" className="underline">
                     Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a href="/terms" target="_blank" rel="noreferrer" className="underline">
+                    Terms of Service
                   </a>
                   .
                 </FormLabel>
