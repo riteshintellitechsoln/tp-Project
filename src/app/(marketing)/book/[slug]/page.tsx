@@ -10,6 +10,7 @@ import {
   getRelatedBooks,
   incrementBookViewCount,
 } from "@/actions/books";
+import { BackButton } from "@/components/shared/back-button";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookGrid } from "@/components/books/book-grid";
@@ -98,6 +99,10 @@ export default async function BookDetailPage({ params }: BookDetailPageProps) {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+
+      <div className="mb-6">
+        <BackButton fallbackHref="/category" />
+      </div>
 
       <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
         <div>

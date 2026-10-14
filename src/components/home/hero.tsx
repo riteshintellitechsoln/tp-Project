@@ -50,7 +50,7 @@ function StatValue({ value }: { value: string }) {
 
   useEffect(() => {
     if (!match || !inView) return;
-    const target = parseInt(match[1].replace(/,/g, ""), 10);
+    const target = parseInt((match[1] ?? "0").replace(/,/g, ""), 10);
     const suffix = match[2];
     const controls = animate(0, target, {
       duration: 1.1,

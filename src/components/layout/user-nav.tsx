@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { LayoutDashboard, Library, LogOut } from "lucide-react";
+import { LayoutDashboard, Library, LogOut, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -52,6 +52,11 @@ export function UserNav() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="truncate font-normal text-muted-foreground">
+          {session.user.name && (
+            <span className="block truncate font-medium text-foreground">
+              {session.user.name}
+            </span>
+          )}
           {session.user.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -60,6 +65,14 @@ export function UserNav() {
             <Link href="/admin" className="cursor-pointer">
               <LayoutDashboard />
               Admin Dashboard
+            </Link>
+          </DropdownMenuItem>
+        )}
+        {!isAdmin && (
+          <DropdownMenuItem asChild>
+            <Link href="/profile" className="cursor-pointer">
+              <UserRound />
+              My Profile
             </Link>
           </DropdownMenuItem>
         )}

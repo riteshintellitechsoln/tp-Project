@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { CompanySize } from "@prisma/client";
 import { companyEmailSchema } from "@/lib/validations/email";
+import { SALUTATIONS } from "@/lib/constants";
 
 // The FULL lead schema — every field from the spec's Lead Form. Replaces
 // Module 13's minimal (name + email + consent) scaffold now that the real
@@ -8,6 +9,9 @@ import { companyEmailSchema } from "@/lib/validations/email";
 // accepted this shape structurally; only the placeholder values it used to
 // fill in are gone now.
 export const leadSchema = z.object({
+  salutation: z.enum(SALUTATIONS, {
+    errorMap: () => ({ message: "Select a salutation" }),
+  }),
   fullName: z.string().min(2, "Enter your full name"),
   email: companyEmailSchema,
   phone: z.string().min(6, "Enter a valid phone number"),

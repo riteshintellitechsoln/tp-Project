@@ -12,11 +12,7 @@ export function useSavedBooksCount(): number {
     }
     sync();
     window.addEventListener(SAVED_BOOKS_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener(SAVED_BOOKS_EVENT, sync);
-      window.removeEventListener("storage", sync);
-    };
+    return () => window.removeEventListener(SAVED_BOOKS_EVENT, sync);
   }, []);
 
   return count;

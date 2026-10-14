@@ -318,10 +318,11 @@ export const openApiSpec = {
       LeadFormInput: {
         type: "object",
         required: [
-          "fullName", "email", "phone", "companyName", "jobTitle", "country",
+          "salutation", "fullName", "email", "phone", "companyName", "jobTitle", "country",
           "department", "industry", "companySize", "consentGiven", "bookSlug",
         ],
         properties: {
+          salutation: { type: "string", enum: ["Mr", "Ms", "Mrs", "Dr"] },
           fullName: { type: "string", minLength: 2 },
           email: {
             type: "string",

@@ -71,7 +71,7 @@ export function DesktopSidebar({ categories }: { categories: NavCategory[] }) {
   return (
     <aside className="hidden w-60 shrink-0 border-r border-[#cbd5df] bg-white lg:block">
       <motion.div
-        className="sticky top-[110px] max-h-[calc(100vh-110px)] overflow-y-auto px-4 py-4 text-[13px] leading-[1.25] text-[#06396d]"
+        className="sticky top-[100px] max-h-[calc(100vh-110px)] overflow-y-auto px-4  text-[13px] leading-[1.25] text-[#06396d]"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

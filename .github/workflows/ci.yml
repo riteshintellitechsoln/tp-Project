@@ -2,12 +2,19 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - development
+
   pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 

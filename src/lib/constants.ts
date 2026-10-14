@@ -9,6 +9,9 @@ export const APP_NAME = "TradeHub";
 // Lead Form (Module 14) and are cheap to keep as code since changing them
 // is a deploy, not a content edit.
 
+export const SALUTATIONS = ["Mr", "Ms", "Mrs", "Dr"] as const;
+export type Salutation = (typeof SALUTATIONS)[number];
+
 export const DEPARTMENTS = [
   "IT / Engineering",
   "Finance",

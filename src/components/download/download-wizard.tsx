@@ -180,6 +180,11 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
     const result = await checkExistingLead(values.email);
     setIsCheckingEmail(false);
 
+    if (result.error) {
+      emailForm.setError("email", { message: result.error });
+      return;
+    }
+
     if (result.exists) {
       setExistingName(result.fullName ?? null);
       setStep("quick");
@@ -196,7 +201,8 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
         setQuickError(result.error);
         return;
       }
-      router.push(`/thank-you?book=${book.slug}`);
+      // router.push(`/thank-you?book=${book.slug}`);
+            router.push(`/thank-you?book=${book.slug}&email=${encodeURIComponent(email)}`);
     });
   }
 
@@ -312,7 +318,8 @@ export function DownloadWizard({ book }: { book: BookPreview }) {
             <LeadForm
               email={email}
               bookSlug={book.slug}
-              onSuccess={() => router.push(`/thank-you?book=${book.slug}`)}
+              // onSuccess={() => router.push(`/thank-you?book=${book.slug}`)}
+                            onSuccess={() => router.push(`/thank-you?book=${book.slug}&email=${encodeURIComponent(email)}`)}
             />
           </div>
         )}
