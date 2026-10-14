@@ -275,6 +275,15 @@ export function Footer({ categories }: { categories: NavCategory[] }) {
           <p>
             &copy; {year} {siteConfig.name}. All rights reserved.
           </p>
+          <nav aria-label="Legal" className="flex items-center gap-3">
+            <Link href="/privacy" className="transition-colors hover:text-foreground hover:underline">
+              Privacy Policy
+            </Link>
+            <span aria-hidden>·</span>
+            <Link href="/terms" className="transition-colors hover:text-foreground hover:underline">
+              Terms of Service
+            </Link>
+          </nav>
           <p>Downloads require a valid business email address.</p>
         </div>
       </div>

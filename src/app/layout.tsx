@@ -68,8 +68,10 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { SessionWatcher } from "@/components/admin/session-watcher";
+import { SavedBooksSync } from "@/components/providers/saved-books-sync";
 import { CookieConsent } from "@/components/shared/cookie-consent";
 import { OfflineIndicator } from "@/components/shared/offline-indicator";
+import { NavigationProgress } from "@/components/shared/navigation-progress";
 import { siteConfig } from "@/config/site";
 // import "./globals.css";
 
@@ -115,6 +117,8 @@ export default function RootLayout({
         >
           <SessionProvider>
             <SessionWatcher />
+            <SavedBooksSync />
+            <NavigationProgress />
             <OfflineIndicator />
             {children}
             <CookieConsent />

@@ -157,10 +157,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     ...authConfig.callbacks,
-    async jwt({ token, user }: { token: JWT; user?: User }) {
+    async jwt({
+      token,
+      user,
+      trigger,
+      session,
+    }: {
+      token: JWT;
+      user?: User;
+      trigger?: "signIn" | "signUp" | "update";
+      session?: { name?: unknown };
+    }) {
       if (user) {
         token.id = user.id as string;
         token.role = user.role;
+      }
+      // Profile edits call useSession().update({ name }) so the navbar
+      // reflects the new name without signing out and back in.
+      if (trigger === "update" && typeof session?.name === "string" && session.name.trim()) {
+        token.name = session.name.trim();
       }
       return token;
     },

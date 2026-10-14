@@ -3,6 +3,7 @@ import { leadSchema, leadFormSchema } from "@/lib/validations/lead";
 
 function validLead() {
   return {
+    salutation: "Ms" as const,
     fullName: "Jane Smith",
     email: "jane@acme.com",
     phone: "+1 555 123 4567",

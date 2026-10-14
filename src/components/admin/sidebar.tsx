@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   BookText,
-  BookOpen,
   FolderTree,
   Building2,
   Users,
@@ -42,15 +42,22 @@ const NAV_ITEMS = [
 function Brand() {
   return (
     <Link href="/admin" className="flex items-center gap-2" aria-label="Admin home">
-      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#123b6d] to-[#1d4f91] text-white shadow-md shadow-blue-900/20">
-        <BookOpen className="h-5 w-5" />
+      <span className="block h-10 w-10 shrink-0 overflow-hidden rounded-md shadow-md shadow-blue-900/20">
+        <Image
+          src="/itbusinessbook-logo.png"
+          alt="IT BusinessBook logo"
+          width={331}
+          height={331}
+          priority
+          className="h-full w-full object-contain"
+        />
       </span>
       <span className="leading-none">
         <span className="block text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">
           Admin panel
         </span>
         <span className="font-display text-lg font-bold tracking-tight text-[#06396d]">
-          Travelocare
+          itbusinessbook
         </span>
       </span>
     </Link>

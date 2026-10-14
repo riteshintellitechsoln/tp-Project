@@ -91,6 +91,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { Bookmark, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -98,13 +99,18 @@ import { BookGrid } from "@/components/books/book-grid";
 import { BookCard } from "@/components/books/book-card";
 import { BookGridSkeleton } from "@/components/books/book-grid-skeleton";
 import { SectionHeader } from "@/components/home/section-header";
-import { readSavedBooks, removeSavedBook, SAVED_BOOKS_EVENT } from "@/lib/saved-books";
+import {
+  isSavedBooksReady,
+  readSavedBooks,
+  removeSavedBook,
+  SAVED_BOOKS_EVENT,
+} from "@/lib/saved-books";
 import { getBooksBySlugs, getRecommendationsForSlugs } from "@/actions/books";
 import type { BookCardData } from "@/types";
 
 function slugFromUrl(url: string): string | null {
   const match = url.match(/\/book\/([^/?#]+)/);
-  return match ? match[1] : null;
+  return match?.[1] ?? null;
 }
 
 export default function SavedBooksPage() {
@@ -112,9 +118,16 @@ export default function SavedBooksPage() {
   const [recommendations, setRecommendations] = useState<BookCardData[]>([]);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [, startTransition] = useTransition();
+  const { data: session, status } = useSession();
+  const isSignedInUser = !!session?.user;
 
   useEffect(() => {
     function loadAll() {
+      // A signed-in user's list is still coming from the server.
+      if (!isSavedBooksReady()) {
+        setHasLoaded(false);
+        return;
+      }
       const entries = readSavedBooks();
       const slugs = entries
         .map((e) => slugFromUrl(e.url))
@@ -149,9 +162,16 @@ export default function SavedBooksPage() {
         <h1 className="mt-1 font-display text-3xl font-bold sm:text-4xl">Saved for Later</h1>
         <div className="my-4 h-px w-16 bg-seal" />
         <p className="max-w-2xl text-muted-foreground">
-          Saved on this browser only — it won&apos;t follow you to another device. Click the
-          &quot;⋯&quot; menu on any resource to save it here.
+          Click the &quot;⋯&quot; menu on any resource to save it here.{" "}
+          {isSignedInUser
+            ? "Your list is saved to your account."
+            : "You're browsing as a guest, so this list is cleared when you refresh the page."}
         </p>
+        {status === "unauthenticated" && (
+          <Button asChild variant="outline" size="sm" className="mt-4">
+            <Link href="/login?callbackUrl=/saved">Sign in to keep your saved list</Link>
+          </Button>
+        )}
       </div>
 
       {!hasLoaded ? (

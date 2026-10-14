@@ -58,6 +58,7 @@ export async function activateAccountForEmail(email: string): Promise<ActivateRe
   await db.user.create({
     data: {
       name: lead.fullName,
+      salutation: lead.salutation,
       firstName: firstNamePart || lead.fullName,
       lastName: lastNamePart || "",
       email: normalizedEmail,

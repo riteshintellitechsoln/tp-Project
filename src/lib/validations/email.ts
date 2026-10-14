@@ -8,8 +8,8 @@ import { z } from "zod";
 // screen is where an Admin could extend this without a code deploy, if
 // that becomes necessary.
 const FREE_EMAIL_DOMAINS = new Set([
-  "gmail.com",
-  "googlemail.com",
+  // "gmail.com",
+  // "googlemail.com",
   "yahoo.com",
   "yahoo.co.uk",
   "yahoo.co.in",
@@ -37,7 +37,7 @@ const FREE_EMAIL_DOMAINS = new Set([
 // *contains* one (dsfggmail.com, mygmail.com, gamail.com) is a typo or
 // lookalike of a free provider, not a real company domain.
 const FREE_PROVIDER_LOOKALIKES = [
-  "gmail",
+  // "gmail",
   "gamil",
   "gamail",
   "gmial",
